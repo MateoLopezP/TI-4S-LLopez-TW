@@ -1,9 +1,26 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<WEContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WEContext") ?? throw new InvalidOperationException("Connection string 'WEContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+
+var supportedCultures = new[] { "en-US" };
+var supportedUICultures = new[] { "es-ES" };
+
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedUICultures);
+
 var app = builder.Build();
+app.UseRequestLocalization(localizationOptions);
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<WebEins.Models.Produkte>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form method="GET" asp-action="Index">
+    <label>Suchen: </label>
+    <input type="text" name="Suchen" id="Suchen" placeholder="Suchen nach" />
+    <button type="submit">Suchen</button>
+</form>
+<br />
+
+<form method="GET" asp-action="MengeVerfügbar">
+    <button type="submit">Bald aufgelaufen</button>
+</form>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Beschreibung)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Betrag)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Beschreibung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Betrag)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+<br />
+Menge der Produkte: @ViewData["qty"]
+<br />
+Bewertung der gesamten Waren: @ViewBag.Gesamtbewertung
